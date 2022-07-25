@@ -19,10 +19,10 @@ public abstract class DashaMap implements HashMapX {
         }
     }
     @Override
-    public void set(String key, Integer value) {
+    public void set(String key, String value) {
         // look at last node in list
         // set last node to point to next one!
-        Node node = new Node(key, value);
+        Node node = new Node(value);
         get(key).get(get(key).size()-1).setNext(node);
         get(key).add(node);
     }

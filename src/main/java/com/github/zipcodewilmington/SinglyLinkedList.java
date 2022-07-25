@@ -68,4 +68,13 @@ public class SinglyLinkedList {
     public Node[] getSinglyLinkedList() {
         return singlyLinkedList;
     }
+    @Override
+    public String toString() {
+        String returnString = "";
+        for(Node node : singlyLinkedList) {
+            returnString += node.getKey();
+            returnString += " ";
+        }
+        return returnString;
+    }
 }
