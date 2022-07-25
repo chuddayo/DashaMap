@@ -6,34 +6,65 @@ package com.github.zipcodewilmington;
  * @date 10/21/19 9:05 AM
  */
 public abstract class DashaMap implements HashMapX {
-
+    SinglyLinkedList[] hashArray = new SinglyLinkedList[26];
+    public DashaMap() {
+        char myChar = 'a';
+        int index = 0;
+        while (myChar <= 'z') {
+            hashArray[index] = new SinglyLinkedList();
+            Node node = new Node(Character.toString(myChar));
+            hashArray[index].add(node);
+            myChar++;
+            index++;
+        }
+    }
     @Override
-    public void set(String key, String value) {
-
+    public void set(String key, Integer value) {
+        // look at last node in list
+        // set last node to point to next one!
+        Node node = new Node(key, value);
+        get(key).get(get(key).size()-1).setNext(node);
+        get(key).add(node);
     }
 
     @Override
-    public String delete(String key) {
-        return null;
+    public void delete(String key) {
+        SinglyLinkedList[] linkedLists = new SinglyLinkedList[hashArray.length - 1];
+        int indexToDelete = Math.abs(key.charAt(0) - 'a');
+        for (int i = 0; i < indexToDelete; i++) {
+            linkedLists[i] = hashArray[i];
+        }
+        for (int i = indexToDelete; i < hashArray.length; i++) {
+            linkedLists[i] = hashArray[i+1];
+        }
+        hashArray = linkedLists;
     }
 
     @Override
-    public String get(String key) {
+    public SinglyLinkedList get(String key) {
+        for (SinglyLinkedList linkedList : hashArray) {
+            if (linkedList.get(0).getKey().equals(key)) return linkedList;
+        }
         return null;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return hashArray.length == 0;
     }
 
     @Override
     public long size() {
-        return 0;
+        return hashArray.length;
     }
 
     @Override
-    public boolean bucketSize(String key) {
-        return false;
+    public int bucketSize(String key) {
+        for (SinglyLinkedList linkedList : hashArray) {
+            if (linkedList.get(0).getKey().equals(key)) {
+                return linkedList.size() - 1; // every bucket starts at size 1
+            }
+        }
+        return -1;
     }
 }

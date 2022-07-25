@@ -4,8 +4,14 @@ public class Node {
     String key;
     Integer value;
     Node next;
-
-
+    public Node() {}
+    public Node(String key) {
+        this.key = key;
+    }
+    public Node(String key, Integer value) {
+        this.key = key;
+        this.value = value;
+    }
     public String getKey() {
         return key;
     }
